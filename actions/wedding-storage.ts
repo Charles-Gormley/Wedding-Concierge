@@ -1,5 +1,7 @@
 "use server"
 
+import { headers } from "next/headers"
+
 // API key for storage API - should match the one in the API route
 const API_KEY = process.env.DYNAMODB_API_KEY || "your-super-complex-api-key-here-make-it-very-long-and-random"
 
@@ -63,8 +65,10 @@ async function saveWeddingData(weddingName: string, weddingData: string, wedding
       throw new Error("Wedding ID is required")
     }
 
-    // Prepare the API request
-    const baseUrl = process.env.BASE_URL || "http://localhost:3000"
+    // Get the current request's origin
+    const headersList = await headers()
+    const origin = headersList.get('origin') || headersList.get('host')
+    const baseUrl = origin ? `https://${origin}` : process.env.BASE_URL || "http://localhost:3000"
     const apiUrl = `${baseUrl}/api/wedding-storage`
     
     const requestBody = {
