@@ -67,8 +67,15 @@ async function saveWeddingData(weddingName: string, weddingData: string, wedding
 
     // Get the current request's origin
     const headersList = await headers()
-    const origin = headersList.get('origin') || headersList.get('host')
-    const baseUrl = origin ? `https://${origin}` : process.env.BASE_URL || "http://localhost:3000"
+    const host = headersList.get('host') || process.env.BASE_URL || 'localhost:3000'
+
+    if (!host) {
+      console.error("Host header is missing and no BASE_URL environment variable is set")
+    }
+
+    // Use http for localhost, https for everything else
+    const protocol = host.includes('localhost') ? 'http' : 'https'
+    const baseUrl = `${protocol}://${host}`
     const apiUrl = `${baseUrl}/api/wedding-storage`
     
     const requestBody = {
