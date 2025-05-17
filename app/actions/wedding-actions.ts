@@ -27,12 +27,12 @@ export async function getWeddingData(weddingId: string) {
 
     if (!response.Item) {
       console.log("No wedding found for ID:", weddingId);
-      throw new Error("Wedding not found", { cause: response });
+      throw new Error("Wedding not found", { cause: response.$metadata });
     }
 
     if (!response.Item.wedding_name) {
       console.log("Wedding found but name is missing:", response.Item);
-      throw new Error("Wedding name is missing", { cause: response });
+      throw new Error("Wedding name is missing", { cause: response.$metadata });
     }
 
     return {
