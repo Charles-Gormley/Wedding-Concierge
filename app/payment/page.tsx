@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useAuth } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 
-export default function PaymentPage() {
+function PaymentContent() {
   const { isLoaded, userId } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -101,5 +101,21 @@ export default function PaymentPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function PaymentPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-charcoal dark:to-charcoal-light py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md mx-auto text-center">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Loading...
+          </h1>
+        </div>
+      </div>
+    }>
+      <PaymentContent />
+    </Suspense>
   );
 } 
