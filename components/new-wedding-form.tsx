@@ -59,7 +59,7 @@ export default function NewWeddingForm() {
 
         // Redirect to the chat page for the new wedding
         setTimeout(() => {
-          router.push(`/chat/${result.formattedWeddingName}?id=${result.weddingId}`)
+          router.push(`/chat/${result.weddingId}`)
         }, 1500)
       } else {
         setProcessingStatus("")
