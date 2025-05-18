@@ -1,4 +1,4 @@
-import { getVercelAuthHeaders } from '@/utils/vercel-auth';
+import { getApiHeaders } from '@/utils/api-headers';
 import { headers } from 'next/headers';
 
 interface WeddingData {
@@ -14,11 +14,11 @@ export async function saveWeddingData(data: WeddingData) {
     const protocol = host.includes('localhost') ? 'http' : 'https';
     const baseUrl = `${protocol}://${host}`;
     
-    const authHeaders = await getVercelAuthHeaders();
+    const apiHeaders = await getApiHeaders();
     
     const response = await fetch(`${baseUrl}/api/wedding-storage`, {
       method: 'POST',
-      headers: authHeaders,
+      headers: apiHeaders,
       body: JSON.stringify(data),
     });
 
@@ -40,10 +40,10 @@ export async function getWeddingData(weddingId: string) {
     const protocol = host.includes('localhost') ? 'http' : 'https';
     const baseUrl = `${protocol}://${host}`;
     
-    const authHeaders = await getVercelAuthHeaders();
+    const apiHeaders = await getApiHeaders();
     
     const response = await fetch(`${baseUrl}/api/wedding-storage?weddingId=${weddingId}`, {
-      headers: authHeaders,
+      headers: apiHeaders,
     });
 
     if (!response.ok) {

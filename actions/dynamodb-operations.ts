@@ -1,5 +1,7 @@
 "use server"
 
+import { getApiHeaders } from '@/utils/api-headers';
+
 // API key for DynamoDB API - should match the one in the API route
 const API_KEY = process.env.DYNAMODB_API_KEY || "your-super-complex-api-key-here-make-it-very-long-and-random"
 
@@ -82,13 +84,12 @@ async function saveWeddingToDynamoDB(weddingName: string, weddingData: string, w
       },
     }
 
+    const headers = await getApiHeaders(API_KEY);
+
     // Make the API request
     const response = await fetch(apiUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${API_KEY}`,
-      },
+      headers,
       body: JSON.stringify(requestBody),
     })
 
@@ -134,13 +135,12 @@ export async function getWeddingById(weddingId: string): Promise<any> {
       },
     }
 
+    const headers = await getApiHeaders(API_KEY);
+
     // Make the API request
     const response = await fetch(apiUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${API_KEY}`,
-      },
+      headers,
       body: JSON.stringify(requestBody),
     })
 

@@ -7,7 +7,7 @@ export async function getVercelAuthHeaders() {
   return {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${vercelToken}`,
-    'x-vercel-protection-bypass': headersList.get('x-vercel-protection-bypass') || '',
+    'x-vercel-protection-bypass': '1',
     'x-vercel-deployment-url': headersList.get('x-vercel-deployment-url') || '',
     'x-vercel-ip': headersList.get('x-vercel-ip') || '',
     'x-vercel-ip-country': headersList.get('x-vercel-ip-country') || '',
