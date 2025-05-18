@@ -3,7 +3,7 @@
 import { headers } from "next/headers"
 
 // API key for storage API - should match the one in the API route
-const API_KEY = process.env.DYNAMODB_API_KEY || "your-super-complex-api-key-here-make-it-very-long-and-random"
+const API_KEY = process.env.VERCEL_AUTOMATION_BYPASS_SECRET || "your-super-complex-api-key-here-make-it-very-long-and-random"
 
 // Maximum number of retry attempts
 const MAX_RETRIES = 3
