@@ -87,7 +87,7 @@ async function saveWeddingData(weddingName: string, weddingData: string, wedding
     console.log("API URL:", apiUrl)
     console.log("Request headers:", {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${API_KEY}`,
+      Authorization: `x-vercel-protection-bypass ${API_KEY}`,
     })
     console.log("Request body:", JSON.stringify(requestBody, null, 2))
 
@@ -96,7 +96,7 @@ async function saveWeddingData(weddingName: string, weddingData: string, wedding
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${API_KEY}`,
+        Authorization: `x-vercel-protection-bypass ${API_KEY}`,
       },
       body: JSON.stringify(requestBody),
     })
