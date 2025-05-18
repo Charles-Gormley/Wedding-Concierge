@@ -2,6 +2,14 @@
 
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { GetCommand } from "@aws-sdk/lib-dynamodb";
+import { getVercelAuthHeaders } from '@/utils/vercel-auth';
+import { headers } from 'next/headers';
+
+interface WeddingData {
+  weddingId: string;
+  userId: string;
+  // Add other wedding data fields as needed
+}
 
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION || "us-east-1",
@@ -44,6 +52,56 @@ export async function getWeddingData(weddingId: string) {
     if (error instanceof Error) {
       console.error("Error details:", error.message);
     }
+    throw error;
+  }
+}
+
+export async function createWedding(data: WeddingData) {
+  try {
+    const headersList = await headers();
+    const host = headersList.get('host') || process.env.BASE_URL || 'localhost:3000';
+    const protocol = host.includes('localhost') ? 'http' : 'https';
+    const baseUrl = `${protocol}://${host}`;
+    
+    const authHeaders = await getVercelAuthHeaders();
+    
+    const response = await fetch(`${baseUrl}/api/wedding-storage`, {
+      method: 'POST',
+      headers: authHeaders,
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to create wedding: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error creating wedding:', error);
+    throw error;
+  }
+}
+
+export async function getWedding(weddingId: string) {
+  try {
+    const headersList = await headers();
+    const host = headersList.get('host') || process.env.BASE_URL || 'localhost:3000';
+    const protocol = host.includes('localhost') ? 'http' : 'https';
+    const baseUrl = `${protocol}://${host}`;
+    
+    const authHeaders = await getVercelAuthHeaders();
+    
+    const response = await fetch(`${baseUrl}/api/wedding-storage?weddingId=${weddingId}`, {
+      headers: authHeaders,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to get wedding: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error getting wedding:', error);
     throw error;
   }
 } 

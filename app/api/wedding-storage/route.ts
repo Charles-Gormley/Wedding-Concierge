@@ -2,7 +2,11 @@ import { type NextRequest, NextResponse } from "next/server"
 import { signAwsRequest } from "@/utils/aws-signature-v4"
 
 // Create a secure API key - this should be stored in an environment variable
-const API_KEY = process.env.DYNAMODB_API_KEY || "your-super-complex-api-key-here-make-it-very-long-and-random"
+const API_KEY = process.env.DYNAMODB_API_KEY
+
+if (!API_KEY) {
+  throw new Error("DYNAMODB_API_KEY is not defined")
+}
 
 export async function POST(request: NextRequest) {
   try {
