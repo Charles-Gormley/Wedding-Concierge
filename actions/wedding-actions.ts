@@ -42,30 +42,19 @@ function getS3Client() {
   const s3Client = new S3Client({
     region: process.env.AWS_REGION,
     credentials: {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
     },
-    // Use NodeHttpHandler with explicit configuration
     requestHandler: new NodeHttpHandler({
-      connectionTimeout: 5000, // 5 seconds
-      socketTimeout: 5000, // 5 seconds
+      connectionTimeout: 5000,
+      socketTimeout: 5000,
     }),
-    // Disable credential loading from shared files
     credentialDefaultProvider: () => async () => {
       return {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
       }
-    },
-    // Disable loading config from files
-    loadedConfig: {
-      credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
-      },
-      region: process.env.AWS_REGION,
-      logger: console,
-    },
+    }
   })
 
   return s3Client
