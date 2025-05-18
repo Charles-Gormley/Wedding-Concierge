@@ -84,7 +84,12 @@ async function saveWeddingData(weddingName: string, weddingData: string, wedding
       weddingData,
     }
 
-    console.log("Sending request to wedding storage API")
+    console.log("API URL:", apiUrl)
+    console.log("Request headers:", {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${API_KEY}`,
+    })
+    console.log("Request body:", JSON.stringify(requestBody, null, 2))
 
     // Make the API request
     const response = await fetch(apiUrl, {
@@ -96,16 +101,38 @@ async function saveWeddingData(weddingName: string, weddingData: string, wedding
       body: JSON.stringify(requestBody),
     })
 
+    console.log("Response status:", response.status)
+    console.log("Response headers:", Object.fromEntries(response.headers.entries()))
+
+    const responseText = await response.text()
+    console.log("Raw response:", responseText)
+
     if (!response.ok) {
-      const errorData = await response.json()
-      throw new Error(`Storage API request failed: ${response.status} - ${JSON.stringify(errorData)}`)
+      try {
+        const errorData = JSON.parse(responseText)
+        throw new Error(`Storage API request failed: ${response.status} - ${JSON.stringify(errorData)}`)
+      } catch (parseError) {
+        throw new Error(`Storage API request failed: ${response.status} - ${responseText}`)
+      }
     }
 
-    await response.json()
-    return
+    try {
+      const data = JSON.parse(responseText)
+      console.log("Parsed response data:", data)
+      return
+    } catch (parseError) {
+      console.error("Failed to parse response as JSON:", parseError)
+      throw new Error(`Invalid JSON response: ${responseText}`)
+    }
   } catch (error) {
     // Log additional error details
     if (error instanceof Error) {
+      console.error("Error details:", {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+        cause: error.cause
+      })
       throw error
     } else {
       throw new Error(String(error))

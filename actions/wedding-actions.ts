@@ -459,11 +459,25 @@ export async function processWeddingSubmission(formData: FormData) {
     // Save to both S3 and DynamoDB for redundancy and faster retrieval
     try {
       console.log("Saving raw text document to DynamoDB for faster LLM retrieval")
+      console.log("Wedding Name:", weddingName)
+      console.log("Wedding Details:", JSON.stringify(weddingDetails, null, 2))
+      console.log("Raw Text Document:", rawTextDocument)
+      console.log("Wedding ID:", weddingId)
+      
       // Wait for the save operation to complete to ensure data consistency
+      
       await saveWeddingDataWithRetry(weddingName, rawTextDocument, weddingId)
       console.log("Successfully saved wedding data to DynamoDB")
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error saving to DynamoDB:", error)
+      if (error instanceof Error) {
+        console.error("Error details:", {
+          name: error.name,
+          message: error.message,
+          stack: error.stack,
+          cause: error.cause
+        })
+      }
       // Continue execution even if DynamoDB save fails - we still have the S3 backup
     }
 
