@@ -1,0 +1,79 @@
+{
+  "version": 2,
+  "buildCommand": "next build",
+  "devCommand": "next dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "env": {
+    "NEXT_PUBLIC_API_URL": "https://${VERCEL_URL}",
+    "BASE_URL": "https://${VERCEL_URL}"
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Credentials",
+          "value": "true"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/wedding-id/:path*",
+      "destination": "/api/wedding-id/:path*"
+    },
+    {
+      "source": "/api/user-usage/:path*",
+      "destination": "/api/user-usage/:path*"
+    },
+    {
+      "source": "/api/payment-intent/:path*",
+      "destination": "/api/payment-intent/:path*"
+    },
+    {
+      "source": "/api/create-checkout-session/:path*",
+      "destination": "/api/create-checkout-session/:path*"
+    },
+    {
+      "source": "/api/webhook/:path*",
+      "destination": "/api/webhook/:path*"
+    },
+    {
+      "source": "/api/new-user/:path*",
+      "destination": "/api/new-user/:path*"
+    },
+    {
+      "source": "/api/wedding-storage/:path*",
+      "destination": "/api/wedding-storage/:path*"
+    },
+    {
+      "source": "/api/storage-test/:path*",
+      "destination": "/api/storage-test/:path*"
+    },
+    {
+      "source": "/api/dynamodb/:path*",
+      "destination": "/api/dynamodb/:path*"
+    }
+  ],
+  "functions": {
+    "app/api/**/*.ts": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  }
+} 
