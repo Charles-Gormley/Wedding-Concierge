@@ -8,7 +8,7 @@ import { useState } from "react";
 const products = [
   {
     name: "Wedding Concierge – Basic Package",
-    priceId: "price_1RIcwCDzi753SA5LWezd9M6d",
+    priceId: "price_1RQeivPK0tCPoCBSI7J0u7Yy",
     price: "$79",
     description: "Essential AI chat interface for basic wedding information",
     features: [
@@ -23,7 +23,7 @@ const products = [
   },
   {
     name: "Wedding Concierge – Premium Package",
-    priceId: "price_1RIcwCDzi753SA5LWezd9M6d", // Replace with actual price ID
+    priceId: "price_1RQeivPK0tCPoCBSI7J0u7Yy", // Replace with actual price ID
     price: "$125",
     description: "Complete AI concierge with voice and SMS for stress-free wedding communication",
     features: [
@@ -39,7 +39,7 @@ const products = [
   },
   {
     name: "Wedding Concierge – Ultimate Package",
-    priceId: "price_1RIcwCDzi753SA5LWezd9M6d", // Replace with actual price ID
+    priceId: "price_1RQeivPK0tCPoCBSI7J0u7Yy", // Replace with actual price ID
     price: "$135",
     description: "Complete wedding concierge solution with multi-platform support and advanced features",
     features: [
