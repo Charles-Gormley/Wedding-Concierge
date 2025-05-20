@@ -10,12 +10,6 @@ if (!API_KEY) {
 
 export async function POST(request: NextRequest) {
   try {
-    // Verify API key
-    const authHeader = request.headers.get("authorization")
-    if (!authHeader || authHeader !== `Bearer ${API_KEY}`) {
-      console.log("Unauthorized access attempt to Wedding Storage API")
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-    }
 
     // Parse the request body
     const body = await request.json()
