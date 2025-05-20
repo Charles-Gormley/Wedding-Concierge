@@ -88,6 +88,7 @@ async function saveWeddingData(weddingName: string, weddingData: string, wedding
     console.log("Request headers:", {
       "Content-Type": "application/json",
       "x-vercel-protection-bypass": `${API_KEY}`,
+      "Authorization": `Bearer ${API_KEY}`,
     })
     console.log("Request body:", JSON.stringify(requestBody, null, 2))
 

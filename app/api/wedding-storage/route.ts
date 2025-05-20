@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import { signAwsRequest } from "@/utils/aws-signature-v4"
 
 // Create a secure API key - this should be stored in an environment variable
-const API_KEY = process.env.DYNAMODB_API_KEY
+const API_KEY = process.env.VERCEL_AUTOMATION_BYPASS_SECRET
 
 if (!API_KEY) {
   throw new Error("DYNAMODB_API_KEY is not defined")
