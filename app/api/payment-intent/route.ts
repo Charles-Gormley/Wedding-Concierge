@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     const { userId } = await auth();
     const { priceId } = await req.json();
 
-    if (!userId) {
+    if (!userId) { // Check if user is authenticated / the validity of the userId.
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
 
     // Create a payment intent
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 1000, // $10.00 in cents
+      amount: 7_999, // TODO: Grab this dynamically from the priceId.
       currency: "usd",
       metadata: {
         priceId,
