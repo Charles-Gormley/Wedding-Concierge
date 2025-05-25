@@ -97,7 +97,7 @@ const Product = ({ name, price, priceId, description, features, image, available
       const { paymentIntentId } = await response.json();
 
       // If already authenticated, proceed to payment
-      router.push(`/payment?priceId=${paymentIntentId}`);
+      router.push(`/payment?priceId=${priceId}&paymentIntentId=${paymentIntentId}`);
     } catch (error) {
       console.error('Payment initiation error:', error);
       // TODO: Show error to user in UI
