@@ -28,8 +28,8 @@ export async function POST(req: Request) {
       amount: 7_999, // TODO: Grab this dynamically from the priceId.
       currency: "usd",
       metadata: {
-        priceId,
-        userId,
+        priceId: priceId,
+        userId: userId,
       },
     });
 
