@@ -23,11 +23,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Price ID is required" }, { status: 400 });
     }
 
+    // Create a customer ID with Stripe.
+    const customer = await stripe.customers.create({
+      metadata: {
+        "clerkUserId": userId
+      }
+    });
+
     // Create a payment intent
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 7_999, // TODO: Grab this dynamically from the priceId.
       currency: "usd",
-      description: userId
+      customer: customer.id,
     });
 
     // // Store the payment intent ID with the user's ID
