@@ -76,12 +76,19 @@ const Product = ({ name, price, priceId, description, features, image, available
       if (!isLoaded) return;
 
       if (!userId) {
+        // Redirect to sign in page with return URL
+        router.push(`/sign-up`);
+        return;
+      }
+
+      if (userId) {
         // Create payment intent and redirect to sign in
         const response = await fetch('/api/payment-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ priceId }),
         });
+
 
         if (!response.ok) {
           const errorData = await response.json();
