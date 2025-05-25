@@ -28,13 +28,13 @@ export async function POST(req: Request) {
       amount: 7_999, // TODO: Grab this dynamically from the priceId.
       currency: "usd",
       metadata: {
-        priceId: priceId,
-        userId: userId,
+        "priceId": priceId,
+        "userId": userId,
       },
     });
 
-    // Store the payment intent ID with the user's ID
-    paymentIntents.set(paymentIntent.id, { priceId: priceId, userId: userId });
+    // // Store the payment intent ID with the user's ID
+    // paymentIntents.set(paymentIntent.id, { priceId: priceId, userId: userId });
 
     return NextResponse.json({ paymentIntentId: paymentIntent.id });
   } catch (error) {
