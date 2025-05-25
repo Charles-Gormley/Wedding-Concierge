@@ -81,24 +81,20 @@ const Product = ({ name, price, priceId, description, features, image, available
         return;
       }
 
-      if (userId) {
-        // Create payment intent and redirect to sign in
-        const response = await fetch('/api/payment-intent', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ priceId }),
-        });
+      // Create payment intent and redirect to sign in
+      const response = await fetch('/api/payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ priceId }),
+      });
 
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Failed to create payment intent');
-        }
-
-        const { paymentIntentId } = await response.json();
-        router.push(`/sign-in?redirect_url=/payment?paymentIntentId=${paymentIntentId}`);
-        return;
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to create payment intent');
       }
+
+      const { paymentIntentId } = await response.json();
 
       // If already authenticated, proceed to payment
       router.push(`/payment?priceId=${priceId}`);
