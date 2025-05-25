@@ -27,6 +27,7 @@ export async function POST(req: Request) {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 7_999, // TODO: Grab this dynamically from the priceId.
       currency: "usd",
+      customer: userId,
       metadata: { 
         "priceId": priceId,
         "userId": userId,
