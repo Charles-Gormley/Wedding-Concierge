@@ -8,7 +8,7 @@ import { useState } from "react";
 const products = [
   {
     name: "Wedding Concierge – Basic Package",
-    priceId: "price_1RQeivPK0tCPoCBSI7J0u7Yy",
+    priceId: "price_1RR0U7AEMhk42daUGHkgHpBQ",
     price: "$79",
     description: "Essential AI chat interface for basic wedding information",
     features: [
