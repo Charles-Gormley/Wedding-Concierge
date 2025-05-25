@@ -17,19 +17,7 @@ function PaymentContent() {
       if (!isLoaded) return;
 
       try {
-        const paymentIntentId = searchParams.get('paymentIntentId');
-        let priceId;
-
-        if (paymentIntentId) {
-          // Retrieve the stored payment intent
-          const response = await fetch(`/api/payment-intent?paymentIntentId=${paymentIntentId}`);
-          if (!response.ok) throw new Error('Invalid payment intent');
-          
-          const data = await response.json();
-          priceId = data.priceId;
-        } else {
-          priceId = searchParams.get('priceId');
-        }
+        const priceId = searchParams.get('priceId');
 
         if (!priceId) {
           throw new Error('No price ID provided');
