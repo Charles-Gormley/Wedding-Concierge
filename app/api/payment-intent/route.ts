@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     });
 
     // Store the payment intent ID with the user's ID
-    paymentIntents.set(paymentIntent.id, { priceId, userId });
+    paymentIntents.set(paymentIntent.id, { priceId: priceId, userId: userId });
 
     return NextResponse.json({ paymentIntentId: paymentIntent.id });
   } catch (error) {
